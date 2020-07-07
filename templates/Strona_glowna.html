@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+  <!--Main layout-->
+   <main>
+        <div class="container wow fadeIn">
+
+            <!-- Heading -->
+            <h2 class="my-5 h2 text-center">Wyszukiwanie ekstremum funkcji Beale</h2>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-8 mb-4 mx-auto">
+
+                    <!--Card-->
+                    <div class="card">
+
+
+                        <!--Card content-->
+                        <form method="POST" class="card-body">
+                            {% csrf_token %}
+
+                        <div class="ukryj_adres">
+                            <!--Grid row-->
+                            <div class="row">
+
+                                <!--Grid column-->
+                                <div class="col-md-6 mb-2">
+
+                                    <!--firstName-->
+                                    <div class="md-form">
+                                        {{ formularz.zakres1 }}
+
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-md-6 mb-2">
+
+                                    <!--lastName-->
+                                    <div class="md-form">
+                                        {{ formularz.zakres2 }}
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <!--Grid row-->
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <div class="md-form">
+                                        {{ formularz.liczba_epok }}
+                                        <label for="address" class=""></label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6 mb-2">
+                                <div class="md-form">
+                                    {{ formularz.wielkosc_populacji }}
+                                    <label  class=""></label>
+                                </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <hr>
+                            <div class="d-block my-3">
+                                <label>Ekstremum funkcji: </label>
+                                {{ formularz.rodzaj_Optymalizacj }}
+                            </div>
+                            <div class="d-block my-3">
+                                <label>Metoda selekcji</label>
+                                {{ formularz.metoda_Selekcji }}
+                            </div>
+                            <div class="selkcja_najlepszych">
+                                <div class="md-block my-3">
+                                    <label>Ile % populacji ma przejść selekcje: </label>
+                                     {{ formularz.ile_Przechodzi }}
+                                 </div>
+                            </div>
+                            <div class="selkcja_turniejowa">
+                                 <div class="md-block my-3">
+                                        <label>Wielkość turnieju: </label>
+                                     {{ formularz.wielkosc_turnieju }}
+                                </div>
+                            </div>
+
+
+                            <div class="d-block my-3">
+                                <label>implementacja_Krzyzowania </label>
+                                {{ formularz.implementacja_Krzyzowania }}
+
+                            </div>
+                            <div class="md-form">
+
+                                {{ formularz.prawdopodbienstwo_Krzyzowania }}
+
+                            </div>
+                            <div class="d-block my-3">
+                                <label>implementacja_MutacjiBrzegowej </label>
+                                {{ formularz.implementacja_MutacjiBrzegowej }}
+                            </div>
+                                 <div class="Mutacja_Zakres">
+                                 <div class="md-form">
+                                     {{ formularz.zakresMutacji1 }}
+                                </div>
+                                     <div class="md-form">
+
+                                     {{ formularz.zakresMutacji2 }}
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="md-form">
+
+                                {{ formularz.prawdopodbienstwo_MutacjiBrzegowej }}
+
+                            </div>
+                            <div class="md-form">
+
+                                {{ formularz.prawdopodbienstwo_OperatoraInwersji }}
+                            </div>
+                            <div class="md-form">
+
+                                {{ formularz.elita }}
+                            </div>
+
+
+
+
+                            <hr class="mb-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Wykonaj działanie</button>
+                        </div>
+                        </form>
+
+                    </div>
+                    <!--/.Card-->
+
+                </div>
+                <!--Grid column-->
+
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+        </div>
+    </main>
+{% endblock %}
+{% block dodatkowe_skrypty %}
+<script>
+var ukryj_Mutacja_Zakres=$('.Mutacja_Zakres');
+var ukryj_najlepszych=$('.selkcja_najlepszych');
+var ukryj_turniej=$('.selkcja_turniejowa');
+var selkcja_najlepszych=document.querySelector("input[id=id_metoda_Selekcji_0]");
+var selkcja_turniejowa=document.querySelector("input[id=id_metoda_Selekcji_2]");
+var selkcja_ruletkowa=document.querySelector("input[id=id_metoda_Selekcji_1]");
+var mutacja_rownomierna=document.querySelector("input[id=id_implementacja_MutacjiBrzegowej_0]");
+var mutacja_przez_zamiane=document.querySelector("input[id=id_implementacja_MutacjiBrzegowej_1]");
+function hide() {
+    ukryj_najlepszych.hide();
+    ukryj_turniej.hide();
+    ukryj_Mutacja_Zakres.hide()
+}
+selkcja_najlepszych.addEventListener('change',function () {
+    if(this.checked) {
+        ukryj_najlepszych.show();
+        ukryj_turniej.hide()
+    }
+})
+selkcja_ruletkowa.addEventListener('change',function () {
+    if(this.checked){
+    ukryj_turniej.hide();
+    ukryj_najlepszych.hide();
+    }
+
+})
+selkcja_turniejowa.addEventListener('change',function () {
+    if(this.checked){
+    ukryj_turniej.show();
+    ukryj_najlepszych.hide();
+    }
+
+})
+mutacja_rownomierna.addEventListener('change',function () {
+    if(this.checked){
+    ukryj_Mutacja_Zakres.show();
+    }
+
+})
+mutacja_przez_zamiane.addEventListener('change',function () {
+    if(this.checked){
+    ukryj_Mutacja_Zakres.hide();
+    }
+
+})
+
+</script>
+{% endblock %}
